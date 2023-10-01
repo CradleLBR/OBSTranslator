@@ -6,5 +6,10 @@ namespace OBSTranslator
         {
             InitializeComponent();
         }
+
+        private async void Main_LoadAsync(object sender, EventArgs e)
+        {
+
+;       }
     }
 }
