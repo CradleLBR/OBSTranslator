@@ -18,9 +18,9 @@ namespace OBSTranslator
         private StringBuilder _response = new StringBuilder();
         private byte[] _responseBuffer = new byte[1024];
 
-        public ObsSocket(Uri obsWebSocketUri)
+        public ObsSocket(string obsWebSocketUri)
         {
-            _uri = obsWebSocketUri;
+            _uri = new Uri("ws://" + obsWebSocketUri);
         }
 
         public async Task ConnectAsync()
