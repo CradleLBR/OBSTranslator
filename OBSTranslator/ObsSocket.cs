@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace OBSTranslator
 {
-    internal class ObsSocket
+    public class ObsSocket
     {
         private Uri _uri;
         private ClientWebSocket _clientWebSocket;
@@ -175,6 +169,25 @@ namespace OBSTranslator
         {
             byte[] bufferBytes = Encoding.UTF8.GetBytes(message);
             await _clientWebSocket.SendAsync(new ArraySegment<byte>(bufferBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+
+        public class InputSettings
+        {
+            public string FontFace { get; set; } = "Arial";
+            public string FontSize { get; set; } = "40";
+            public string FontStyle { get; set; } = "Обычный";
+            public string Text { get; set; } = "Text";
+            public string HorizontalAlign { get; set; } = "center";
+            public string VerticalAlign { get; set; } = "bottom";
+            public string Opacity { get; set; } = "100";
+            public string Color { get; set; } = "16777215";
+            public string Extents { get; set; } = "true";
+            public string ExtentsWrap { get; set; } = "true";
+            public string ExtentsCX { get; set; } = "1400";
+            public string ExtentsCY { get; set; } = "200";
+            public string PositionX { get; set; } = "250.0";
+            public string PositionY { get; set; } = "850.0";
+
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             tabControl1 = new TabControl();
             mainPage = new TabPage();
             settingsPage = new TabPage();
@@ -231,6 +232,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(tabControl1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Main";
             Text = "OBSTranslator";
             Load += Main_LoadAsync;

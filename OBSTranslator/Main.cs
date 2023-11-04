@@ -24,7 +24,7 @@
         {
             var sceneName = tb_SceneName.Text;
             var sourceName = tb_SourceName.Text;
-            await _obsSocket.CreateInput(sceneName, sourceName, new InputSettings());
+            await _obsSocket.CreateInput(sceneName, sourceName, new ObsSocket.InputSettings());
         }
 
         private void lbl_HidePort_Click(object sender, EventArgs e)
