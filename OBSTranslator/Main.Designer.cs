@@ -32,13 +32,16 @@
             tabControl1 = new TabControl();
             mainPage = new TabPage();
             settingsPage = new TabPage();
-            groupBox2 = new GroupBox();
+            gb_Sound = new GroupBox();
+            cb_Micro = new ComboBox();
+            label1 = new Label();
+            gb_TSource = new GroupBox();
             btn_CreateSource = new Button();
             lbl_SourceName = new Label();
             tb_SourceName = new TextBox();
             lbl_SceneName = new Label();
             tb_SceneName = new TextBox();
-            groupBox1 = new GroupBox();
+            gb_Server = new GroupBox();
             tb_Port = new TextBox();
             lbl_Port = new Label();
             lbl_HidePort = new Label();
@@ -48,8 +51,9 @@
             btn_Connect = new Button();
             tabControl1.SuspendLayout();
             settingsPage.SuspendLayout();
-            groupBox2.SuspendLayout();
-            groupBox1.SuspendLayout();
+            gb_Sound.SuspendLayout();
+            gb_TSource.SuspendLayout();
+            gb_Server.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -75,8 +79,9 @@
             // 
             // settingsPage
             // 
-            settingsPage.Controls.Add(groupBox2);
-            settingsPage.Controls.Add(groupBox1);
+            settingsPage.Controls.Add(gb_Sound);
+            settingsPage.Controls.Add(gb_TSource);
+            settingsPage.Controls.Add(gb_Server);
             settingsPage.Location = new Point(4, 24);
             settingsPage.Name = "settingsPage";
             settingsPage.Padding = new Padding(3);
@@ -85,20 +90,51 @@
             settingsPage.Text = "Settings";
             settingsPage.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // gb_Sound
             // 
-            groupBox2.Controls.Add(btn_CreateSource);
-            groupBox2.Controls.Add(lbl_SourceName);
-            groupBox2.Controls.Add(tb_SourceName);
-            groupBox2.Controls.Add(lbl_SceneName);
-            groupBox2.Controls.Add(tb_SceneName);
-            groupBox2.Dock = DockStyle.Top;
-            groupBox2.Location = new Point(3, 126);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(786, 166);
-            groupBox2.TabIndex = 6;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Text Source";
+            gb_Sound.Controls.Add(cb_Micro);
+            gb_Sound.Controls.Add(label1);
+            gb_Sound.Dock = DockStyle.Top;
+            gb_Sound.Location = new Point(3, 292);
+            gb_Sound.Name = "gb_Sound";
+            gb_Sound.Size = new Size(786, 100);
+            gb_Sound.TabIndex = 7;
+            gb_Sound.TabStop = false;
+            gb_Sound.Text = "Sound";
+            // 
+            // cb_Micro
+            // 
+            cb_Micro.FormattingEnabled = true;
+            cb_Micro.Location = new Point(123, 25);
+            cb_Micro.Name = "cb_Micro";
+            cb_Micro.Size = new Size(220, 23);
+            cb_Micro.TabIndex = 9;
+            cb_Micro.SelectedIndexChanged += cb_Micro_SelectedIndexChanged;
+            cb_Micro.DropDownClosed += cb_Micro_DropDownClosed;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(24, 28);
+            label1.Name = "label1";
+            label1.Size = new Size(75, 15);
+            label1.TabIndex = 8;
+            label1.Text = "Microphone:";
+            // 
+            // gb_TSource
+            // 
+            gb_TSource.Controls.Add(btn_CreateSource);
+            gb_TSource.Controls.Add(lbl_SourceName);
+            gb_TSource.Controls.Add(tb_SourceName);
+            gb_TSource.Controls.Add(lbl_SceneName);
+            gb_TSource.Controls.Add(tb_SceneName);
+            gb_TSource.Dock = DockStyle.Top;
+            gb_TSource.Location = new Point(3, 126);
+            gb_TSource.Name = "gb_TSource";
+            gb_TSource.Size = new Size(786, 166);
+            gb_TSource.TabIndex = 6;
+            gb_TSource.TabStop = false;
+            gb_TSource.Text = "Text Source";
             // 
             // btn_CreateSource
             // 
@@ -142,22 +178,22 @@
             tb_SceneName.Size = new Size(220, 23);
             tb_SceneName.TabIndex = 4;
             // 
-            // groupBox1
+            // gb_Server
             // 
-            groupBox1.Controls.Add(tb_Port);
-            groupBox1.Controls.Add(lbl_Port);
-            groupBox1.Controls.Add(lbl_HidePort);
-            groupBox1.Controls.Add(tb_Ip);
-            groupBox1.Controls.Add(lbl_Ip);
-            groupBox1.Controls.Add(lbl_HideIp);
-            groupBox1.Controls.Add(btn_Connect);
-            groupBox1.Dock = DockStyle.Top;
-            groupBox1.Location = new Point(3, 3);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(786, 123);
-            groupBox1.TabIndex = 5;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Server";
+            gb_Server.Controls.Add(tb_Port);
+            gb_Server.Controls.Add(lbl_Port);
+            gb_Server.Controls.Add(lbl_HidePort);
+            gb_Server.Controls.Add(tb_Ip);
+            gb_Server.Controls.Add(lbl_Ip);
+            gb_Server.Controls.Add(lbl_HideIp);
+            gb_Server.Controls.Add(btn_Connect);
+            gb_Server.Dock = DockStyle.Top;
+            gb_Server.Location = new Point(3, 3);
+            gb_Server.Name = "gb_Server";
+            gb_Server.Size = new Size(786, 123);
+            gb_Server.TabIndex = 5;
+            gb_Server.TabStop = false;
+            gb_Server.Text = "Server";
             // 
             // tb_Port
             // 
@@ -235,13 +271,15 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Main";
             Text = "OBSTranslator";
-            Load += Main_LoadAsync;
+            Load += Main_Load;
             tabControl1.ResumeLayout(false);
             settingsPage.ResumeLayout(false);
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            gb_Sound.ResumeLayout(false);
+            gb_Sound.PerformLayout();
+            gb_TSource.ResumeLayout(false);
+            gb_TSource.PerformLayout();
+            gb_Server.ResumeLayout(false);
+            gb_Server.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -254,9 +292,9 @@
         private Label lbl_Ip;
         private Label lbl_HideIp;
         private Button btn_Connect;
-        private GroupBox groupBox2;
+        private GroupBox gb_TSource;
         private TextBox tb_SceneName;
-        private GroupBox groupBox1;
+        private GroupBox gb_Server;
         private Button btn_CreateSource;
         private Label lbl_SourceName;
         private TextBox tb_SourceName;
@@ -264,5 +302,8 @@
         private TextBox tb_Port;
         private Label lbl_Port;
         private Label lbl_HidePort;
+        private GroupBox gb_Sound;
+        private ComboBox cb_Micro;
+        private Label label1;
     }
 }

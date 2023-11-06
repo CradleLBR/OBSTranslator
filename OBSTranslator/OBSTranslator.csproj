@@ -12,10 +12,15 @@
 
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="model\**"
+      CopyToOutputDirectory="PreserveNewest"
+      LinkBase="model\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="System.Net.WebSockets" Version="4.3.0" />
+    <PackageReference Include="Vosk" Version="0.3.38" />
   </ItemGroup>
 
 </Project>

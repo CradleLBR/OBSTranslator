@@ -3,14 +3,19 @@
     public partial class Main : Form
     {
         private ObsSocket _obsSocket;
+        private SpeechRecognizer _speechRecognizer;
+
         public Main()
         {
             InitializeComponent();
         }
 
-        private void Main_LoadAsync(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
-
+            _speechRecognizer = new SpeechRecognizer();
+            cb_Micro.DataSource = _speechRecognizer.GetInputDevices();
+            var selectedDevice = _speechRecognizer.GetDefaultDevice();
+            cb_Micro.SelectedIndex = selectedDevice;
         }
 
         private async void btn_Connect_ClickAsync(object sender, EventArgs e)
@@ -41,6 +46,16 @@
                 tb_Ip.PasswordChar = '\0';
             else
                 tb_Ip.PasswordChar = '●';
+        }
+
+        private void cb_Micro_DropDownClosed(object sender, EventArgs e)
+        {
+            this.ActiveControl = null;
+        }
+
+        private void cb_Micro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _speechRecognizer.SetInputDevice(cb_Micro.SelectedIndex);
         }
     }
 }
