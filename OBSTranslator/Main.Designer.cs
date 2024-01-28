@@ -233,7 +233,6 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Main";
             Text = "OBSTranslator";
-            Load += Main_LoadAsync;
             tabControl1.ResumeLayout(false);
             settingsPage.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
