@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Vosk;
 using System.Text.Json;
+using NLog;
 
 namespace OBSTranslator
 {
@@ -17,6 +18,7 @@ namespace OBSTranslator
         private MMDeviceCollection _captureDevices;
         private MMDevice _selectedDevice;
         private WaveInEvent _waveIn;
+        Logger logger = LogManager.GetCurrentClassLogger();
 
         private List<string> _inputDevices;
         public List<string> InputDevices
@@ -51,20 +53,29 @@ namespace OBSTranslator
         DateTime _startTime;
         public void StartRecognize()
         {
+            try
+            {
+                logger.Info("Recognition starting...");
                 _recognizer = new VoskRecognizer(_model, _sampleRate);
-
-            _waveIn = new WaveInEvent();
-            _waveIn.WaveFormat = new WaveFormat(_sampleRate, _channelCount);
-            //_waveIn.DeviceNumber = _selectedDeviceIndex;
-            //_waveIn.BufferMilliseconds = 10000;
-            _waveIn.DataAvailable += WaveInOnDataAvailable;
-            _startTime = DateTime.Now;
-            _waveIn.StartRecording();
+                _waveIn = new WaveInEvent();
+                _waveIn.WaveFormat = new WaveFormat(_sampleRate, _channelCount);
+                //_waveIn.DeviceNumber = _selectedDeviceIndex;
+                //_waveIn.BufferMilliseconds = 10000;
+                _waveIn.DataAvailable += WaveInOnDataAvailable;
+                _startTime = DateTime.Now;
+                _waveIn.StartRecording();
+            }
+            catch { throw; }
         }
 
         public void StopRecognize()
         {
-            _waveIn.StopRecording();
+            try
+            {
+                logger.Info("Recognition stopping...");
+                _waveIn.StopRecording();
+            }
+            catch { throw; }
         }
 
         private void WaveInOnDataAvailable(object? sender, WaveInEventArgs e)
@@ -98,7 +109,7 @@ namespace OBSTranslator
             }
             catch (Exception ex) 
             {
-
+                logger.Error(ex, "Speech unit recognition error.");
             }
         }
 

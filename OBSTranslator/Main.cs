@@ -86,24 +86,50 @@ namespace OBSTranslator
 
         private void btn_Start_Click(object sender, EventArgs e)
         {
-            Task.Run(() => _speechRecognizer.StartRecognize());
-            //_speechRecognizer.StartRecognize();
+            try
+            {
+                Task.Run(() => _speechRecognizer.StartRecognize());
+                //_speechRecognizer.StartRecognize();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Recognition starting error.");  
+            }
         }
 
         private void OnSpeechRecognized(object? sender, EventArgs e)
         {
-            _recognizedText = (e as RecognizerEventArgs)?.Text;
-            //tb_RecognizedText.Text += DateTime.Now + ": " + _recognizedText + Environment.NewLine;
-            //tb_RecognizedText.Text = DateTime.Now + ": test";
-            if (tb_RecognizedText.InvokeRequired)
-                tb_RecognizedText.BeginInvoke(new Action(() => { tb_RecognizedText.Text += DateTime.Now + ": " + _recognizedText + Environment.NewLine; }));
-            //else
-            //    tb_RecognizedText.Text = DateTime.Now + ": " + _recognizedText;
+            try
+            {
+                _recognizedText = (e as RecognizerEventArgs)?.Text;
+                //tb_RecognizedText.Text += DateTime.Now + ": " + _recognizedText + Environment.NewLine;
+                //tb_RecognizedText.Text = DateTime.Now + ": test";
+                if (tb_RecognizedText.InvokeRequired)
+                    tb_RecognizedText.BeginInvoke(new Action(() =>
+                        { 
+                            var text = DateTime.Now + ": " + _recognizedText;
+                            tb_RecognizedText.Text += text + Environment.NewLine;
+                            logger.ConditionalDebug("||RECOGNIZED||" + text);
+                        }));
+                //else
+                //    tb_RecognizedText.Text = DateTime.Now + ": " + _recognizedText;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Recognized text handling error.");
+            }
         }
 
         private void btn_Stop_Click(object sender, EventArgs e)
         {
-            _speechRecognizer.StopRecognize();
+            try
+            {
+                _speechRecognizer.StopRecognize();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Recognition stopping error.");
+            }
         }
     }
 }
