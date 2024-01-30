@@ -31,6 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             tabControl1 = new TabControl();
             mainPage = new TabPage();
+            btn_Stop = new Button();
+            btn_Start = new Button();
+            tb_TranslatedText = new TextBox();
+            tb_RecognizedText = new TextBox();
             settingsPage = new TabPage();
             gb_Sound = new GroupBox();
             cb_Micro = new ComboBox();
@@ -50,6 +54,7 @@
             lbl_HideIp = new Label();
             btn_Connect = new Button();
             tabControl1.SuspendLayout();
+            mainPage.SuspendLayout();
             settingsPage.SuspendLayout();
             gb_Sound.SuspendLayout();
             gb_TSource.SuspendLayout();
@@ -69,6 +74,10 @@
             // 
             // mainPage
             // 
+            mainPage.Controls.Add(btn_Stop);
+            mainPage.Controls.Add(btn_Start);
+            mainPage.Controls.Add(tb_TranslatedText);
+            mainPage.Controls.Add(tb_RecognizedText);
             mainPage.Location = new Point(4, 24);
             mainPage.Name = "mainPage";
             mainPage.Padding = new Padding(3);
@@ -76,6 +85,54 @@
             mainPage.TabIndex = 0;
             mainPage.Text = "Main";
             mainPage.UseVisualStyleBackColor = true;
+            // 
+            // btn_Stop
+            // 
+            btn_Stop.BackColor = Color.LightGray;
+            btn_Stop.Dock = DockStyle.Bottom;
+            btn_Stop.FlatStyle = FlatStyle.Flat;
+            btn_Stop.Location = new Point(3, 384);
+            btn_Stop.Name = "btn_Stop";
+            btn_Stop.Size = new Size(786, 35);
+            btn_Stop.TabIndex = 5;
+            btn_Stop.Text = "Stop";
+            btn_Stop.UseVisualStyleBackColor = false;
+            btn_Stop.Click += btn_Stop_Click;
+            // 
+            // btn_Start
+            // 
+            btn_Start.BackColor = Color.LightGray;
+            btn_Start.Dock = DockStyle.Top;
+            btn_Start.FlatStyle = FlatStyle.Flat;
+            btn_Start.Location = new Point(3, 349);
+            btn_Start.Name = "btn_Start";
+            btn_Start.Size = new Size(786, 35);
+            btn_Start.TabIndex = 4;
+            btn_Start.Text = "Start";
+            btn_Start.UseVisualStyleBackColor = false;
+            btn_Start.Click += btn_Start_Click;
+            // 
+            // tb_TranslatedText
+            // 
+            tb_TranslatedText.BackColor = SystemColors.ButtonHighlight;
+            tb_TranslatedText.Dock = DockStyle.Top;
+            tb_TranslatedText.Location = new Point(3, 176);
+            tb_TranslatedText.Multiline = true;
+            tb_TranslatedText.Name = "tb_TranslatedText";
+            tb_TranslatedText.ReadOnly = true;
+            tb_TranslatedText.Size = new Size(786, 173);
+            tb_TranslatedText.TabIndex = 1;
+            // 
+            // tb_RecognizedText
+            // 
+            tb_RecognizedText.BackColor = SystemColors.ButtonHighlight;
+            tb_RecognizedText.Dock = DockStyle.Top;
+            tb_RecognizedText.Location = new Point(3, 3);
+            tb_RecognizedText.Multiline = true;
+            tb_RecognizedText.Name = "tb_RecognizedText";
+            tb_RecognizedText.ReadOnly = true;
+            tb_RecognizedText.Size = new Size(786, 173);
+            tb_RecognizedText.TabIndex = 0;
             // 
             // settingsPage
             // 
@@ -109,6 +166,7 @@
             cb_Micro.Name = "cb_Micro";
             cb_Micro.Size = new Size(220, 23);
             cb_Micro.TabIndex = 9;
+            cb_Micro.DropDown += cb_Micro_DropDown;
             cb_Micro.SelectedIndexChanged += cb_Micro_SelectedIndexChanged;
             cb_Micro.DropDownClosed += cb_Micro_DropDownClosed;
             // 
@@ -273,6 +331,8 @@
             Text = "OBSTranslator";
             Load += Main_Load;
             tabControl1.ResumeLayout(false);
+            mainPage.ResumeLayout(false);
+            mainPage.PerformLayout();
             settingsPage.ResumeLayout(false);
             gb_Sound.ResumeLayout(false);
             gb_Sound.PerformLayout();
@@ -305,5 +365,9 @@
         private GroupBox gb_Sound;
         private ComboBox cb_Micro;
         private Label label1;
+        private TextBox tb_RecognizedText;
+        private TextBox tb_TranslatedText;
+        private Button btn_Stop;
+        private Button btn_Start;
     }
 }
