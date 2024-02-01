@@ -55,13 +55,14 @@ namespace OBSTranslator
         {
             try
             {
-                logger.Info("Recognition starting...");
                 _recognizer = new VoskRecognizer(_model, _sampleRate);
                 _waveIn = new WaveInEvent();
+                _waveIn.DeviceNumber = _selectedDeviceIndex;
                 _waveIn.WaveFormat = new WaveFormat(_sampleRate, _channelCount);
-                //_waveIn.DeviceNumber = _selectedDeviceIndex;
+                logger.Info($"Input Device: {InputDevices[_selectedDeviceIndex]} ({_sampleRate} Hz, {_channelCount}).");
                 //_waveIn.BufferMilliseconds = 10000;
                 _waveIn.DataAvailable += WaveInOnDataAvailable;
+                logger.Info("Recognition starting...");
                 _startTime = DateTime.Now;
                 _waveIn.StartRecording();
             }
