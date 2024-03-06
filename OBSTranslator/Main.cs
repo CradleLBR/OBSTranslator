@@ -1,9 +1,13 @@
-﻿using NLog;
+﻿using MaterialSkin;
+using MaterialSkin.Controls;
+using NLog;
 
 namespace OBSTranslator
 {
-    public partial class Main : Form
+    public partial class Main : MaterialForm
     {
+        private readonly MaterialSkinManager materialSkinManager;
+
         private ObsSocket _obsSocket;
         private SpeechRecognizer _speechRecognizer;
         private string? _recognizedText;
@@ -12,15 +16,21 @@ namespace OBSTranslator
         public Main()
         {
             InitializeComponent();
+
+            materialSkinManager = MaterialSkinManager.Instance;
+            materialSkinManager.EnforceBackcolorOnAllComponents = true;
+            materialSkinManager.AddFormToManage(this);
+            materialSkinManager.Theme = MaterialSkinManager.Themes.LIGHT;
+            materialSkinManager.ColorScheme = new ColorScheme(Primary.Green600, Primary.Green700, Primary.Green200, Accent.Green700, TextShade.WHITE);
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
             _speechRecognizer = new SpeechRecognizer();
             _speechRecognizer.SpeechRecognized += OnSpeechRecognized;
-            cb_Micro.DataSource = _speechRecognizer.InputDevices;
+            mcb_Micro.DataSource = _speechRecognizer.InputDevices;
             var selectedDevice = _speechRecognizer.SelectedDeviceIndex;
-            cb_Micro.SelectedIndex = selectedDevice;
+            mcb_Micro.SelectedIndex = selectedDevice;
         }
 
         private async void btn_Connect_ClickAsync(object sender, EventArgs e)
@@ -67,21 +77,21 @@ namespace OBSTranslator
                 tb_Ip.PasswordChar = '●';
         }
 
-        private void cb_Micro_DropDownClosed(object sender, EventArgs e)
+        private void mcb_Micro_DropDownClosed(object sender, EventArgs e)
         {
             this.ActiveControl = null;
         }
 
-        private void cb_Micro_SelectedIndexChanged(object sender, EventArgs e)
+        private void mcb_Micro_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _speechRecognizer.SetInputDevice(cb_Micro.SelectedIndex);
+            _speechRecognizer.SetInputDevice(mcb_Micro.SelectedIndex);
         }
 
-        private void cb_Micro_DropDown(object sender, EventArgs e)
+        private void mcb_Micro_DropDown(object sender, EventArgs e)
         {
-            cb_Micro.DataSource = _speechRecognizer.InputDevices;
+            mcb_Micro.DataSource = _speechRecognizer.InputDevices;
             var selectedDevice = _speechRecognizer.SelectedDeviceIndex;
-            cb_Micro.SelectedIndex = selectedDevice;
+            mcb_Micro.SelectedIndex = selectedDevice;
         }
 
         private void btn_Start_Click(object sender, EventArgs e)
@@ -93,7 +103,7 @@ namespace OBSTranslator
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Recognition starting error.");  
+                logger.Error(ex, "Recognition starting error.");
             }
         }
 
@@ -106,8 +116,8 @@ namespace OBSTranslator
                 //tb_RecognizedText.Text = DateTime.Now + ": test";
                 if (tb_RecognizedText.InvokeRequired)
                     tb_RecognizedText.BeginInvoke(new Action(() =>
-                        { 
-                            var text = DateTime.Now + ": " + _recognizedText;
+                        {
+                            var text = DateTime.Now.ToString("MM/dd/yy HH:mm:ss") + ": " + _recognizedText;
                             tb_RecognizedText.Text += text + Environment.NewLine;
                             logger.ConditionalDebug("||RECOGNIZED||" + text);
                         }));
@@ -130,6 +140,26 @@ namespace OBSTranslator
             {
                 logger.Error(ex, "Recognition stopping error.");
             }
+        }
+
+        private void flp_Settings_Layout(object sender, LayoutEventArgs e)
+        {
+            flp_Settings.SuspendLayout();
+            foreach (Control ctrl in flp_Settings.Controls)
+            {
+                ctrl.Width = flp_Settings.ClientSize.Width - 34;
+            }
+            flp_Settings.ResumeLayout();
+        }
+
+        private void mep_Server_PanelExpand(object sender, EventArgs e)
+        {
+            mep_Source.Collapse = true;
+        }
+
+        private void mep_Source_PanelExpand(object sender, EventArgs e)
+        {
+            mep_Server.Collapse = true;
         }
     }
 }

@@ -6,11 +6,12 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <VersionPrefix>0.0.4</VersionPrefix>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <VersionPrefix>0.0.5</VersionPrefix>
+    <ApplicationIcon>.\images\Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MaterialSkin.2" Version="2.3.1" />
     <PackageReference Include="NLog.Config" Version="4.7.15" />
     <PackageReference Include="NLog.Windows.Forms" Version="5.2.2" />
     <PackageReference Include="NAudio" Version="2.2.1" />
@@ -22,10 +23,8 @@
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Icon.ico" />
-    <None Include="model\**"
-      CopyToOutputDirectory="PreserveNewest"
-      LinkBase="model\" />
+    <Content Include=".\images\Icon.ico" />
+    <None Include="model\**" CopyToOutputDirectory="PreserveNewest" LinkBase="model\" />
   </ItemGroup>
 
 </Project>
